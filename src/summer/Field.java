@@ -101,45 +101,66 @@ public class Field extends JTable implements MouseListener{
 	
 	public void setShips(int deck) {
 		
-		int ships  = 5-deck;
+		int ships = 5-deck;
 		
 			for(int i =0; i<ships-1; i++) {
 				
-				boolean shipCompleted = false;
 				
-				while (!shipCompleted) {
+				int direction = rand.nextInt(1, 3); //1-vertical, 2 horizontal
 				
-					int direction = rand.nextInt(1, 3); //1-vertical, 2 horizontal
-					
-					int startRow;
-					int startCol;
-					
+				int startRow;
+				int startCol;
+				
+				switch(direction) {
+				
+					case 1: 
+						
+						startRow = rand.nextInt(2, 12-deck);							
+						startCol = rand.nextInt(2, 12);							
+						this.setValueAt("■", startRow, startCol);							
+						break;
+						
+					case 2:
+						
+						startRow = rand.nextInt(2, 12);							
+						startCol = rand.nextInt(2, 12-deck);							
+						this.setValueAt("■", startRow, startCol);							
+						break;
+						
+				}
+				
+				int row;
+				int col;
+				
+				for (int o = 0; o<deck-1; o++) {					
 					switch(direction) {
 					
 						case 1: 
 							
-							startRow = rand.nextInt(2, 12-deck);							
-							startCol = rand.nextInt(2, 12);							
-							this.setValueAt("■", startRow, startCol);					
-							
+							row = rand.nextInt(2, 12-deck);							
+							col = rand.nextInt(2, 12);							
+							this.setValueAt("■", row, col);							
 							break;
 							
 						case 2:
 							
-							startRow = rand.nextInt(2, 12);							
-							startCol = rand.nextInt(2, 12-deck);							
-							this.setValueAt("■", startRow, startCol);
-							
+							row = rand.nextInt(2, 12);							
+							col = rand.nextInt(2, 12-deck);							
+							this.setValueAt("■", row, col);							
 							break;
-							
-					}
-					
-					for (int o = 0; o<deck; o++) {
 						
-						
-					
-					}
+					}					
 				}
+				
+				
+				
+				//boolean shipCompleted = false;				
+				//while (!shipCompleted) {
+				
+					
+					
+					
+				//}
 				
 			}
 			
