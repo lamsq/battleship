@@ -38,9 +38,6 @@ public class Field extends JTable implements MouseListener{
 			this.setValueAt(Integer.toString(i), i, 0);
 		}
 		
-		
-		
-		
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         
@@ -60,11 +57,7 @@ public class Field extends JTable implements MouseListener{
 			}
 	    }
 		
-		
-		
-		
 		container.add(this);
-		
 		
 	}
 
@@ -110,13 +103,7 @@ public class Field extends JTable implements MouseListener{
 		
 		int ships  = 5-deck;
 		
-		
-		
-		
-		
-			
-			
-			for(int i =0; i<ships; i++) {
+			for(int i =0; i<ships-1; i++) {
 				
 				boolean shipCompleted = false;
 				
@@ -131,21 +118,16 @@ public class Field extends JTable implements MouseListener{
 					
 						case 1: 
 							
-							startRow = rand.nextInt(2, 12-deck);
-							
-							startCol = rand.nextInt(2, 12);
-							
-							this.setValueAt("■", startRow, startCol);
-							
+							startRow = rand.nextInt(2, 12-deck);							
+							startCol = rand.nextInt(2, 12);							
+							this.setValueAt("■", startRow, startCol);					
 							
 							break;
 							
 						case 2:
 							
-							startRow = rand.nextInt(2, 12);
-							
-							startCol = rand.nextInt(2, 12-deck);
-							
+							startRow = rand.nextInt(2, 12);							
+							startCol = rand.nextInt(2, 12-deck);							
 							this.setValueAt("■", startRow, startCol);
 							
 							break;
@@ -154,37 +136,17 @@ public class Field extends JTable implements MouseListener{
 					
 					for (int o = 0; o<deck; o++) {
 						
-					
+						
 					
 					}
-				
 				}
 				
 			}
 			
-			
-			
-		
-		
-		
-		
-	
-		
-		
-		
 		
 		//this.repaint();
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
