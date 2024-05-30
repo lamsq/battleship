@@ -33,7 +33,7 @@ public class Graphic {
 		CustomLabel compFieldLabel = new CustomLabel(compFieldLabelPanel, "CPU:");
 		
 		
-		int size = 10;
+		int size = 4;
 		size = size+1;
 		
 		

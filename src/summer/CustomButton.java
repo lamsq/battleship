@@ -25,7 +25,9 @@ public class CustomButton extends JButton implements ActionListener{
 			if (pressed.getText().equals("Start")) {
 				
 				Graphic.computerField.setShips(4);
-				
+				Graphic.computerField.setShips(3);
+				Graphic.computerField.setShips(2);
+				Graphic.computerField.setShips(1);
 				
 				this.setEnabled(false);
 				Graphic.stopButton.setEnabled(true);
@@ -34,6 +36,11 @@ public class CustomButton extends JButton implements ActionListener{
 			}
 			
 			else if (pressed.getText().equals("Stop")) {
+				
+				Graphic.computerField.resetField();
+				Graphic.userField.resetField();
+				
+				
 				this.setEnabled(false);
 				Graphic.startButton.setEnabled(true);
 				
