@@ -102,92 +102,67 @@ public class Field extends JTable implements MouseListener{
 	}
 	
 	
-	public void setShips(int deck) {
-		
-		
+	public void setShips(int deck) {		
 		
 		int ships = 5-deck; //number of ships depends on the number of decks
-		int shipsCounter = 0;
-			
+		int shipsCounter = 0;			
 		
-			while(shipsCounter<ships) {
+			while(shipsCounter<ships) {				
 				
 				ArrayList<int[]> coordTemp = new ArrayList<int[]>();
 				
 				int direction = rand.nextInt(1, 3); //1-vertical, 2 horizontal
+				int row=0;							
+				int col=0;
 				
-				int startRow=0;
-				int startCol=0;
-				
-				switch(direction) {				
+				switch(direction){				
 					case 1:						
-						startRow = rand.nextInt(1, size-deck);							
-						startCol = rand.nextInt(1, size);							
-						this.setValueAt("■", startRow, startCol);							
-						break;
-						
+						row = rand.nextInt(1, size-deck);							
+						col = rand.nextInt(1, size);											
+						break;						
 					case 2:						
-						startRow = rand.nextInt(1, size);							
-						startCol = rand.nextInt(1, size-deck);							
-						this.setValueAt("■", startRow, startCol);							
+						row = rand.nextInt(1, size);							
+						col = rand.nextInt(1, size-deck);							
 						break;						
 				}
 				
-				coordTemp.add(new int[] {startRow, startCol});
 				
-				
-				for (int o = 0; o<deck-1; o++) {
-					
-					int row=0;
-					int col=0;
+				for (int o = 0; o<deck; o++) {
 					
 					switch(direction) {
-						case 1:							
-							row = startRow+o+1;
-							col = startCol;
-							this.setValueAt("■", row, col);							
-							break;
-							
-						case 2:		
-							row = startRow;
-							col = startCol+o+1;							
-							this.setValueAt("■", row, col);							
-							break;						
-					}
-					
-					coordTemp.add(new int[] {row, col});
-					
-					
-					
-					
-				}	
+					case 1:							
+						row++;												
+						break;
+						
+					case 2:						
+						col++;												
+						break;						
+					}					
+					coordTemp.add(new int[] {row, col});					
+				}		
+				
 				
 				boolean collision = false;
 				for (int j=0; j<coordTemp.size(); j++) {						
 					for (int q=0; q<coordTotal.size(); q++) {							
-						if (coordTemp.get(j)==coordTotal.get(q)) {
+						if (Arrays.equals(coordTemp.get(j), coordTotal.get(q))) {
 							collision = true;
 							break;
 						}	
 					}
 				}
 				
-				if(collision) {
-					continue;
-				}
-				else {
+				if(collision)
+					continue;				
+				else {					
 					for (int j=0; j<coordTemp.size(); j++) {					
 						coordTotal.add(coordTemp.get(j));
-					}
-					
+						this.setValueAt("■", coordTemp.get(j)[0], coordTemp.get(j)[1]);						
+					}					
 					shipsCounter++;
-				}
-				
-				
-				
+				}				
 			}
-			
-			
+						
 		//this.repaint();
 		
 	}
