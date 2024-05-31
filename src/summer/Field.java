@@ -112,7 +112,7 @@ public class Field extends JTable implements MouseListener{
 				ArrayList<int[]> coordTemp = new ArrayList<int[]>();
 				ArrayList<int[]> zoneTemp = new ArrayList<int[]>();
 				
-				int direction = 1; //rand.nextInt(1, 3); //1-vertical, 2 horizontal
+				int direction = 2; //rand.nextInt(1, 3); //1-vertical, 2 horizontal
 				int row=0;							
 				int col=0;
 				
@@ -131,15 +131,13 @@ public class Field extends JTable implements MouseListener{
 					switch(direction) {
 						case 1:	
 							
-							row++;
-							
+							row++;							
 							System.out.println("COORD: "+row+" "+col);
 							
 							if (o==0) { //sets dmz on the top								
 								for (int z=-1; z<2; z++) {									
-									if (row-1<1 || col+z>size-1 || col+z<1) {
-										continue;	
-									}
+									if (row-1<1 || col+z>size-1 || col+z<1) 
+										continue;									
 									else {										
 										int[] topZone = {row-1,col+z};
 										zoneTemp.add(topZone);
@@ -152,7 +150,7 @@ public class Field extends JTable implements MouseListener{
 								int[] zone2 = {row, col+1};								
 								if(zone1[0]<1)
 									zoneTemp.add(zone2);
-								else if (zone2[0]>10)
+								else if (zone2[0]>size-1)
 									zoneTemp.add(zone1);
 								else							
 									zoneTemp.add(zone1);
@@ -161,9 +159,8 @@ public class Field extends JTable implements MouseListener{
 							
 							if (o==deck-1) { //sets dmz on the bottom								
 								for (int z=-1; z<2; z++) {									
-									if (row+1>size-1 || col+z>size-1 || col+z<1) {
-										continue;
-									}
+									if (row+1>size-1 || col+z>size-1 || col+z<1) 
+										continue;									
 									else {
 										int[] bottomZone = {row+1, col+z};
 										zoneTemp.add(bottomZone);
@@ -174,48 +171,41 @@ public class Field extends JTable implements MouseListener{
 							
 						case 2:	
 							
-							col++;
+							col++;							
 							
-							
-							if (o==0) { //sets dmz on the top
-								
+							if (o==0) { //sets dmz on the top								
 								for (int z=-1; z<2; z++) {									
-									if (col+z<1 || col+z>10) {
-										continue;	
-									}
+									if (col-1<1 || row+z>size-1 || row+z<1) 
+										continue;									
 									else {										
-										int[] topZone = {row-1,col+z};
+										int[] topZone = {row+z,col-1};
 										zoneTemp.add(topZone);
 									}									
 								}								
 							}
 							
-							if (o<deck-1) {		//sets dmz along the ship						
+							if (o<deck) {		//sets dmz along the ship						
 								int[] zone1 = {row-1, col};
 								int[] zone2 = {row+1, col};								
 								if(zone1[0]<1)
 									zoneTemp.add(zone2);
-								else if (zone2[0]>10)
+								else if (zone2[0]>size-1)
 									zoneTemp.add(zone1);
 								else							
 									zoneTemp.add(zone1);
 									zoneTemp.add(zone2);								
 							}
-							else { //sets dmz on the bottom
-								
+							
+							if (o==deck-1) { //sets dmz on the bottom								
 								for (int z=-1; z<2; z++) {									
-									if (col+z<1 || col+z>10) {
-										continue;
-									}
+									if (col+1>size-1 || row+z>size-1 || row+1<size-1) 
+										continue;									
 									else {
-										int[] bottomZone = {row+1, col+z};
+										int[] bottomZone = {row+z, col+1};
 										zoneTemp.add(bottomZone);
 									}									
 								}								
-							}
-							
-							
-							
+							}							
 							break;						
 					}					
 					coordTemp.add(new int[] {row, col});					
