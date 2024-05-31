@@ -110,8 +110,9 @@ public class Field extends JTable implements MouseListener{
 			while(shipsCounter<ships) {				
 				
 				ArrayList<int[]> coordTemp = new ArrayList<int[]>();
+				ArrayList<int[]> zoneTemp = new ArrayList<int[]>();
 				
-				int direction = rand.nextInt(1, 3); //1-vertical, 2 horizontal
+				int direction = 1; //rand.nextInt(1, 3); //1-vertical, 2 horizontal
 				int row=0;							
 				int col=0;
 				
@@ -124,22 +125,99 @@ public class Field extends JTable implements MouseListener{
 						row = rand.nextInt(1, size);							
 						col = rand.nextInt(1, size-deck);							
 						break;						
-				}
+				}				
 				
-				
-				for (int o = 0; o<deck; o++) {
-					
+				for (int o = 0; o<deck; o++) {					
 					switch(direction) {
-					case 1:							
-						row++;												
-						break;
-						
-					case 2:						
-						col++;												
-						break;						
+						case 1:	
+							
+							row++;
+							
+							if (o==0) { //sets dmz on the top								
+								for (int z=-1; z<2; z++) {									
+									if (col+z<1 || col+z>10) {
+										continue;	
+									}
+									else {										
+										int[] topZone = {row-1,col+z};
+										zoneTemp.add(topZone);
+									}									
+								}								
+							}
+							
+							if (o<deck) {		//sets dmz along the ship						
+								int[] zone1 = {row, col-1};
+								int[] zone2 = {row, col+1};								
+								if(zone1[0]<1)
+									zoneTemp.add(zone2);
+								else if (zone2[0]>10)
+									zoneTemp.add(zone1);
+								else							
+									zoneTemp.add(zone1);
+									zoneTemp.add(zone2);								
+							}
+							if (o==deck-1) { //sets dmz on the bottom								
+								for (int z=-1; z<2; z++) {									
+									if (col+z<1 || col+z>10) {
+										continue;
+									}
+									else {
+										int[] bottomZone = {row+1, col+z};
+										zoneTemp.add(bottomZone);
+									}									
+								}								
+							}							
+							break;
+							
+						case 2:	
+							
+							col++;
+							
+							
+							if (o==0) { //sets dmz on the top
+								
+								for (int z=-1; z<2; z++) {									
+									if (col+z<1 || col+z>10) {
+										continue;	
+									}
+									else {										
+										int[] topZone = {row-1,col+z};
+										zoneTemp.add(topZone);
+									}									
+								}								
+							}
+							
+							if (o<deck-1) {		//sets dmz along the ship						
+								int[] zone1 = {row-1, col};
+								int[] zone2 = {row+1, col};								
+								if(zone1[0]<1)
+									zoneTemp.add(zone2);
+								else if (zone2[0]>10)
+									zoneTemp.add(zone1);
+								else							
+									zoneTemp.add(zone1);
+									zoneTemp.add(zone2);								
+							}
+							else { //sets dmz on the bottom
+								
+								for (int z=-1; z<2; z++) {									
+									if (col+z<1 || col+z>10) {
+										continue;
+									}
+									else {
+										int[] bottomZone = {row+1, col+z};
+										zoneTemp.add(bottomZone);
+									}									
+								}								
+							}
+							
+							
+							
+							break;						
 					}					
 					coordTemp.add(new int[] {row, col});					
-				}		
+				}
+				
 				
 				
 				boolean collision = false;
@@ -158,12 +236,29 @@ public class Field extends JTable implements MouseListener{
 					for (int j=0; j<coordTemp.size(); j++) {					
 						coordTotal.add(coordTemp.get(j));
 						this.setValueAt("■", coordTemp.get(j)[0], coordTemp.get(j)[1]);						
-					}					
-					shipsCounter++;
-				}				
+					}	
+					
+//					for (int i=0; i<coordTemp.size(); i++) {
+//						System.out.println(coordTemp.get(i)[0]+"-"+coordTemp.get(i)[1]);
+//					}
+					
+					Ship ship = new Ship(deck, coordTemp, zoneTemp, direction, size);
+					shipsCounter++;					
+				}
+				
+				
+				for (int l=0; l<zoneTemp.size(); l++) {					
+					zoneTotal.add(zoneTemp.get(l));					
+				}
+				for (int i=0; i<zoneTotal.size(); i++) {
+					this.setValueAt("x", zoneTotal.get(i)[0], zoneTotal.get(i)[1]);	
+					System.out.println(zoneTotal.get(i)[0]+"-"+zoneTotal.get(i)[1]);
+				}
+				
+				
 			}
 						
-		//this.repaint();
+		
 		
 	}
 	
