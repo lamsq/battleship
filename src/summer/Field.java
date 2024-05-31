@@ -148,13 +148,16 @@ public class Field extends JTable implements MouseListener{
 							if (o<deck) {		//sets dmz along the ship						
 								int[] zone1 = {row, col-1};
 								int[] zone2 = {row, col+1};								
-								if(zone1[0]<1)
-									zoneTemp.add(zone2);
-								else if (zone2[0]>size-1)
+								if(zone1[1]<1) {
+									zoneTemp.add(zone2);  
+								}
+								else if (zone2[1]>size-1) {									
 									zoneTemp.add(zone1);
-								else							
-									zoneTemp.add(zone1);
-									zoneTemp.add(zone2);								
+								}
+								else {				
+									zoneTemp.add(zone1);									
+									zoneTemp.add(zone2);										
+								}
 							}
 							
 							if (o==deck-1) { //sets dmz on the bottom								
@@ -187,18 +190,21 @@ public class Field extends JTable implements MouseListener{
 							if (o<deck) {		//sets dmz along the ship						
 								int[] zone1 = {row-1, col};
 								int[] zone2 = {row+1, col};								
-								if(zone1[0]<1)
+								if(zone1[0]<1) {
 									zoneTemp.add(zone2);
-								else if (zone2[0]>size-1)
+								}
+								else if (zone2[0]>size-1) {
 									zoneTemp.add(zone1);
-								else							
+								}
+								else {							
 									zoneTemp.add(zone1);
-									zoneTemp.add(zone2);								
+									zoneTemp.add(zone2);
+								}
 							}
 							
 							if (o==deck-1) { //sets dmz on the bottom								
 								for (int z=-1; z<2; z++) {									
-									if (col+1>size-1 || row+z>size-1 || row+1<size-1) 
+									if (col+1>size-1 || row+z>size-1 || row+1<1) 
 										continue;									
 									else {
 										int[] bottomZone = {row+z, col+1};
@@ -278,7 +284,7 @@ public class Field extends JTable implements MouseListener{
 		}
 		
 		coordTotal = new ArrayList<int[]>();
-		
+		zoneTotal = new ArrayList<int[]>();
 		
 	}
 	
