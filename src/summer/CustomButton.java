@@ -24,8 +24,8 @@ public class CustomButton extends JButton implements ActionListener{
 			
 			if (pressed.getText().equals("Start")) {
 				
-				Graphic.computerField.setShips(4);
-//				Graphic.computerField.setShips(3);
+//				Graphic.computerField.setShips(4);
+				Graphic.computerField.setShips(3);
 //				Graphic.computerField.setShips(2);
 //				Graphic.computerField.setShips(1);
 				

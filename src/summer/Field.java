@@ -112,7 +112,7 @@ public class Field extends JTable implements MouseListener{
 				ArrayList<int[]> coordTemp = new ArrayList<int[]>();
 				ArrayList<int[]> zoneTemp = new ArrayList<int[]>();
 				
-				int direction = 2; //rand.nextInt(1, 3); //1-vertical, 2 horizontal
+				int direction = rand.nextInt(1, 3); //1-vertical, 2 horizontal
 				int row=0;							
 				int col=0;
 				
@@ -204,7 +204,7 @@ public class Field extends JTable implements MouseListener{
 							
 							if (o==deck-1) { //sets dmz on the bottom								
 								for (int z=-1; z<2; z++) {									
-									if (col+1>size-1 || row+z>size-1 || row+1<1) 
+									if (col+1>size-1 || row+z>size-1 || row+z<1) 
 										continue;									
 									else {
 										int[] bottomZone = {row+z, col+1};
@@ -249,10 +249,10 @@ public class Field extends JTable implements MouseListener{
 				for (int l=0; l<zoneTemp.size(); l++) {					
 					zoneTotal.add(zoneTemp.get(l));					
 				}
-				for (int i=0; i<zoneTotal.size(); i++) {
-					this.setValueAt("x", zoneTotal.get(i)[0], zoneTotal.get(i)[1]);	
-					System.out.println(zoneTotal.get(i)[0]+"-"+zoneTotal.get(i)[1]);
-				}
+//				for (int i=0; i<zoneTotal.size(); i++) {
+//					this.setValueAt("x", zoneTotal.get(i)[0], zoneTotal.get(i)[1]);	
+//					System.out.println(zoneTotal.get(i)[0]+"-"+zoneTotal.get(i)[1]);
+//				}
 				
 				
 			}
