@@ -133,9 +133,11 @@ public class Field extends JTable implements MouseListener{
 							
 							row++;
 							
+							System.out.println("COORD: "+row+" "+col);
+							
 							if (o==0) { //sets dmz on the top								
 								for (int z=-1; z<2; z++) {									
-									if (col+z<1 || col+z>10) {
+									if (row-1<1 || col+z>size-1 || col+z<1) {
 										continue;	
 									}
 									else {										
@@ -156,9 +158,10 @@ public class Field extends JTable implements MouseListener{
 									zoneTemp.add(zone1);
 									zoneTemp.add(zone2);								
 							}
+							
 							if (o==deck-1) { //sets dmz on the bottom								
 								for (int z=-1; z<2; z++) {									
-									if (col+z<1 || col+z>10) {
+									if (row+1>size-1 || col+z>size-1 || col+z<1) {
 										continue;
 									}
 									else {
