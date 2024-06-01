@@ -132,7 +132,6 @@ public class Field extends JTable implements MouseListener{
 						case 1:	
 							
 							row++;							
-							System.out.println("COORD: "+row+" "+col);
 							
 							if (o==0) { //sets dmz on the top								
 								for (int z=-1; z<2; z++) {									
@@ -148,12 +147,10 @@ public class Field extends JTable implements MouseListener{
 							if (o<deck) {		//sets dmz along the ship						
 								int[] zone1 = {row, col-1};
 								int[] zone2 = {row, col+1};								
-								if(zone1[1]<1) {
-									zoneTemp.add(zone2);  
-								}
-								else if (zone2[1]>size-1) {									
-									zoneTemp.add(zone1);
-								}
+								if(zone1[1]<1) 
+									zoneTemp.add(zone2); 								
+								else if (zone2[1]>size-1) 								
+									zoneTemp.add(zone1);								
 								else {				
 									zoneTemp.add(zone1);									
 									zoneTemp.add(zone2);										
@@ -190,12 +187,10 @@ public class Field extends JTable implements MouseListener{
 							if (o<deck) {		//sets dmz along the ship						
 								int[] zone1 = {row-1, col};
 								int[] zone2 = {row+1, col};								
-								if(zone1[0]<1) {
-									zoneTemp.add(zone2);
-								}
-								else if (zone2[0]>size-1) {
-									zoneTemp.add(zone1);
-								}
+								if(zone1[0]<1) 
+									zoneTemp.add(zone2);								
+								else if (zone2[0]>size-1) 
+									zoneTemp.add(zone1);								
 								else {							
 									zoneTemp.add(zone1);
 									zoneTemp.add(zone2);
@@ -224,6 +219,14 @@ public class Field extends JTable implements MouseListener{
 					for (int q=0; q<coordTotal.size(); q++) {							
 						if (Arrays.equals(coordTemp.get(j), coordTotal.get(q))) {
 							collision = true;
+							j=coordTemp.size()-1;
+							break;
+						}	
+					}
+					for (int q=0; q<zoneTotal.size(); q++) {							
+						if (Arrays.equals(coordTemp.get(j), zoneTotal.get(q))) {
+							collision = true;
+							j=coordTemp.size()-1;
 							break;
 						}	
 					}
@@ -237,28 +240,16 @@ public class Field extends JTable implements MouseListener{
 						this.setValueAt("■", coordTemp.get(j)[0], coordTemp.get(j)[1]);						
 					}	
 					
-//					for (int i=0; i<coordTemp.size(); i++) {
-//						System.out.println(coordTemp.get(i)[0]+"-"+coordTemp.get(i)[1]);
-//					}
-					
+					for (int j=0; j<zoneTemp.size(); j++) {					
+						zoneTotal.add(zoneTemp.get(j));							
+					}
+										
 					Ship ship = new Ship(deck, coordTemp, zoneTemp, direction, size);
 					shipsCounter++;					
 				}
 				
-				
-				for (int l=0; l<zoneTemp.size(); l++) {					
-					zoneTotal.add(zoneTemp.get(l));					
-				}
-//				for (int i=0; i<zoneTotal.size(); i++) {
-//					this.setValueAt("x", zoneTotal.get(i)[0], zoneTotal.get(i)[1]);	
-//					System.out.println(zoneTotal.get(i)[0]+"-"+zoneTotal.get(i)[1]);
-//				}
-				
-				
 			}
-						
-		
-		
+			
 	}
 	
 	
