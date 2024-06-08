@@ -29,6 +29,14 @@ public class CustomButton extends JButton implements ActionListener{
 				Graphic.computerField.setShips(2);
 				Graphic.computerField.setShips(1);
 				
+				Graphic.userField.setShips(4);
+				Graphic.userField.setShips(3);
+				Graphic.userField.setShips(2);
+				Graphic.userField.setShips(1);
+				
+				Graphic.userField.setFocusable(false);
+				Graphic.userField.setRowSelectionAllowed(false);
+				
 				this.setEnabled(false);
 				Graphic.stopButton.setEnabled(true);
 				

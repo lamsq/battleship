@@ -35,18 +35,19 @@ public class Graphic {
 		
 		int size = 10;
 		size = size+1;
+		int move = 0;
 		
 		
 		CustomPanel compFieldPanel = new CustomPanel(mainPanel);
 		DefaultTableModel modelComp = new DefaultTableModel(size, size);
-		computerField = new Field(modelComp, size, compFieldPanel);
+		computerField = new Field(modelComp, size, compFieldPanel, true);
 		CustomPanel userFieldLabelPanel = new CustomPanel(mainPanel);
 		
 		
 		CustomLabel userFieldLabel = new CustomLabel(userFieldLabelPanel, "Player:");		
 		CustomPanel userFieldPanel = new CustomPanel(mainPanel);
 		DefaultTableModel modelUser = new DefaultTableModel(size, size);
-		userField = new Field(modelUser, size, userFieldPanel);
+		userField = new Field(modelUser, size, userFieldPanel, true);
 		
 		
 		//action listeners for buttons
@@ -58,6 +59,30 @@ public class Graphic {
 		
 		computerField.addMouseListener(computerField);
 		userField.addMouseListener(userField);
+		
+		while (computerField.getShipsCoordinates().size()!=0 || userField.getShipsCoordinates().size()!=0 ) {
+			
+			if (move%2==0) {
+				
+				
+				userField.setActive(false);
+				
+				
+				computerField.setActive(true);
+				
+				
+			}
+			else {
+				
+				userField.setActive(true);
+				
+				
+				computerField.setActive(false);
+				
+				
+			}
+			move++;
+		}
 		
 		
 		

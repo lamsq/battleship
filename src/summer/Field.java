@@ -20,12 +20,14 @@ public class Field extends JTable implements MouseListener{
 	private int selectCol;
 	private int confirmRow;
 	private int confirmCol;
+	private boolean active;
 	private static int clickCounter=0;
 	
-	public Field (DefaultTableModel model, int size, CustomPanel container) {
+	public Field (DefaultTableModel model, int size, CustomPanel container, boolean active) {
 		
 		super(model);
 		this.size = size;
+		this.active = active;
 				
 		this.setRowHeight(18);
 		for (int i = 0; i<size; i++) {
@@ -100,11 +102,14 @@ public class Field extends JTable implements MouseListener{
 		
 		
 		
-		
-		
 	}
 	
 	private boolean cellAttacked(int row, int col) {
+		
+		
+		if (this.getModel().getValueAt(row, col)!=null && this.getModel().getValueAt(row, col).equals("X")) {
+			return false;
+		}
 		
 		for (int i=0; i<this.coordTotal.size(); i++) {
 			
@@ -136,6 +141,8 @@ public class Field extends JTable implements MouseListener{
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
+		
+		
 		
 		this.setBackground(Color.PINK);	
 		
@@ -302,6 +309,11 @@ public class Field extends JTable implements MouseListener{
 	}
 	
 	
+	public ArrayList<int[]> getShipsCoordinates(){
+		
+		return this.coordTotal;
+	}
+	
 	public void resetField() {
 		
 		for (int o = 0; o<size; o++) {			
@@ -334,6 +346,24 @@ public class Field extends JTable implements MouseListener{
        return false;
     }
 	
+	public boolean isActive() {
+		return this.active;
+	}
+	
+	public void setActive(boolean active) {
+		
+		this.setFocusable(active);
+		this.setRowSelectionAllowed(active);
+		
+		this.active = active;
+	}
+	
+	
+	public void attack() {
+		
+		
+		
+	}
 	
 	
 	
