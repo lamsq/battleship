@@ -110,6 +110,7 @@ public class Field extends JTable implements MouseListener{
 			
 			if (this.coordTotal.get(i)[0]==row && this.coordTotal.get(i)[1]==col ) {
 				this.setValueAt("X", row, col);
+				this.coordTotal.remove(i);
 				return true;
 			}			
 		}
