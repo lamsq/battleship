@@ -16,13 +16,15 @@ public class Field extends JTable implements MouseListener{
 	private ArrayList<int[]> coordTotal = new ArrayList<int[]>();
 	private ArrayList<int[]> zoneTotal = new ArrayList<int[]>();
 	private int size;
+	private int selectRow;
+	private int selectCol;
+	private int confirmRow;
+	private int confirmCol;
+	private static int clickCounter=0;
 	
 	public Field (DefaultTableModel model, int size, CustomPanel container) {
 		
 		super(model);
-		
-//		coordTotal = new ArrayList<int[]>();
-//		zoneTotal = new ArrayList<int[]>();
 		this.size = size;
 				
 		this.setRowHeight(18);
@@ -67,19 +69,67 @@ public class Field extends JTable implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("test: mouse ckicked in the field");
-		// TODO Auto-generated method stub
+		
+		if (getSelectedRow()>=1 && getSelectedColumn()<=size) {
+			if (clickCounter==1) {				
+				confirmRow=getSelectedRow();
+				confirmCol=getSelectedColumn();				
+				if(confirmRow==selectRow && confirmCol==selectCol) {			
+					clickCounter++;		
+					System.out.println("counter increased");
+				}				
+				else {
+					clickCounter--;
+					System.out.println("counter decreased");
+				}				
+			}
+			else if (clickCounter ==0) {
+				selectRow = this.getSelectedRow();
+				selectCol = this.getSelectedColumn();
+				clickCounter++;				
+			}
+		}
+		
+		if (clickCounter == 2) {
+			this.cellAttacked(confirmRow, confirmCol);
+			clickCounter = 0;
+		}
+		
+		
+		
+		
+		
+		
+		
 		
 	}
+	
+	private boolean cellAttacked(int row, int col) {
+		
+		for (int i=0; i<this.coordTotal.size(); i++) {
+			
+			if (this.coordTotal.get(i)[0]==row && this.coordTotal.get(i)[1]==col ) {
+				this.setValueAt("X", row, col);
+				return true;
+			}			
+		}
+		this.setValueAt("-", row, col);
+		return false;
+	}
+	
+	
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
+		
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
+		
 		
 	}
 
@@ -88,7 +138,6 @@ public class Field extends JTable implements MouseListener{
 		
 		this.setBackground(Color.PINK);	
 		
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -96,8 +145,7 @@ public class Field extends JTable implements MouseListener{
 	public void mouseExited(MouseEvent e) {
 		
 		this.setBackground(defaultColor);
-		
-		// TODO Auto-generated method stub
+
 		
 	}
 	
@@ -280,7 +328,10 @@ public class Field extends JTable implements MouseListener{
 	}
 	
 	
-	
+	@Override
+    public boolean isCellEditable(int row, int column) {
+       return false;
+    }
 	
 	
 	
