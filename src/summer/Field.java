@@ -359,7 +359,17 @@ public class Field extends JTable implements MouseListener{
 	}
 	
 	
-	public void attack() {
+	public void attack(Field field) {
+		
+		int row = rand.nextInt(1, size);
+		int col = rand.nextInt(1, size);
+		
+		if(field.cellAttacked(col, col)) {
+			
+			
+			
+			
+		}
 		
 		
 		
