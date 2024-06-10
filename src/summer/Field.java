@@ -22,6 +22,7 @@ public class Field extends JTable implements MouseListener{
 	private int confirmCol;
 	private boolean active;
 	private static int clickCounter=0;
+	public Thread turn;
 	
 	public Field (DefaultTableModel model, int size, CustomPanel container, boolean active) {
 		
@@ -70,9 +71,12 @@ public class Field extends JTable implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		
+		
+		
 		System.out.println("test: mouse ckicked in the field");
 		
-		if (getSelectedRow()>=1 && getSelectedColumn()<=size) {
+		if (getSelectedRow()>0 && getSelectedColumn()>0) {
 			if (clickCounter==1) {				
 				confirmRow=getSelectedRow();
 				confirmCol=getSelectedColumn();				
@@ -152,7 +156,13 @@ public class Field extends JTable implements MouseListener{
 	@Override
 	public void mouseExited(MouseEvent e) {
 		
-		this.setBackground(defaultColor);
+		if(this.isActive()) {
+			this.setBackground(defaultColor);
+		}
+		else {
+			this.setBackground(Color.GRAY);
+		}
+		
 
 		
 	}
@@ -352,8 +362,16 @@ public class Field extends JTable implements MouseListener{
 	
 	public void setActive(boolean active) {
 		
+		this.setEnabled(active);
 		this.setFocusable(active);
 		this.setRowSelectionAllowed(active);
+		
+		if(active==true) {
+			this.setBackground(defaultColor);
+		}
+		else {
+			this.setBackground(Color.GRAY);
+		}
 		
 		this.active = active;
 	}
@@ -374,6 +392,8 @@ public class Field extends JTable implements MouseListener{
 		
 		
 	}
+	
+	
 	
 	
 	

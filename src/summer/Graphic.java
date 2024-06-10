@@ -60,29 +60,10 @@ public class Graphic {
 		computerField.addMouseListener(computerField);
 		userField.addMouseListener(userField);
 		
-		while (computerField.getShipsCoordinates().size()!=0 || userField.getShipsCoordinates().size()!=0 ) {
-			
-			if (move%2==0) {
-				
-				
-				userField.setActive(false);
-				
-				
-				computerField.setActive(true);
-				
-				
-			}
-			else {
-				
-				userField.setActive(true);
-				
-				
-				computerField.setActive(false);
-				
-				
-			}
-			move++;
-		}
+		userField.setActive(false);
+		
+		computerField.setActive(true);
+		
 		
 		
 		
@@ -100,9 +81,29 @@ public class Graphic {
 		mFrame.setVisible(true);
 		
 		
+		while (computerField.getShipsCoordinates().size()!=0 || userField.getShipsCoordinates().size()!=0 ) {
+			
+			if (move%2==0) {
+				
+				userField.setActive(false);
+				
+				
+				computerField.setActive(true);
+				
+			}
+			else {
+				System.out.println("USER IS ATTACKED");
+				userField.setActive(true);
+				
+				computerField.setActive(false);
+				
+			}
+			move++;
+		}
+		
+		
 		
 	}
-	
 	
 	
 	
