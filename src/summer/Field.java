@@ -9,7 +9,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.*;
 
-public class Field extends JTable implements MouseListener{
+public class Field extends JTable {
 	
 	private Color defaultColor = Color.cyan;
 	private Random rand = new Random();
@@ -69,46 +69,42 @@ public class Field extends JTable implements MouseListener{
 		
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		
-		
-		
-		System.out.println("test: mouse ckicked in the field");
-		
-		if (getSelectedRow()>0 && getSelectedColumn()>0) {
-			if (clickCounter==1) {				
-				confirmRow=getSelectedRow();
-				confirmCol=getSelectedColumn();				
-				if(confirmRow==selectRow && confirmCol==selectCol) {			
-					clickCounter++;		
-					System.out.println("counter increased");
-				}				
-				else {
-					clickCounter--;
-					System.out.println("counter decreased");
-				}				
-			}
-			else if (clickCounter ==0) {
-				selectRow = this.getSelectedRow();
-				selectCol = this.getSelectedColumn();
-				clickCounter++;				
-			}
-		}
-		
-		if (clickCounter == 2) {
-			this.cellAttacked(confirmRow, confirmCol);
-			clickCounter = 0;
-		}
-		
-		
-		
-		
-		
-		
-	}
+//	@Override
+//	public void mouseClicked(MouseEvent e) {
+//		
+//		
+//		
+//		System.out.println("test: mouse ckicked in the field");
+//		
+//		if (getSelectedRow()>0 && getSelectedColumn()>0) {
+//			if (clickCounter==1) {				
+//				confirmRow=getSelectedRow();
+//				confirmCol=getSelectedColumn();				
+//				if(confirmRow==selectRow && confirmCol==selectCol) {			
+//					clickCounter++;		
+//					System.out.println("counter increased");
+//				}				
+//				else {
+//					clickCounter--;
+//					System.out.println("counter decreased");
+//				}				
+//			}
+//			else if (clickCounter ==0) {
+//				selectRow = this.getSelectedRow();
+//				selectCol = this.getSelectedColumn();
+//				clickCounter++;				
+//			}
+//		}
+//		
+//		if (clickCounter == 2) {
+//			this.cellAttacked(confirmRow, confirmCol);
+//			clickCounter = 0;
+//			
+//		}
+//		
+//	}
 	
-	private boolean cellAttacked(int row, int col) {
+	public boolean cellAttacked(int row, int col) {
 		
 		
 		if (this.getModel().getValueAt(row, col)!=null && this.getModel().getValueAt(row, col).equals("X")) {
@@ -129,43 +125,34 @@ public class Field extends JTable implements MouseListener{
 	
 	
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		
-		
-		
-	}
+//	@Override
+//	public void mousePressed(MouseEvent e) {
+//		
+//		
+//		
+//	}
+//
+//	@Override
+//	public void mouseReleased(MouseEvent e) {
+//		
+//		
+//		
+//	}
 
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		
-		
-		
-	}
+//	@Override
+//	public void mouseEntered(MouseEvent e) {			
+//		this.setBackground(Color.PINK);			
+//	}
 
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		
-		
-		
-		this.setBackground(Color.PINK);	
-		
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		
-		if(this.isActive()) {
-			this.setBackground(defaultColor);
-		}
-		else {
-			this.setBackground(Color.GRAY);
-		}
-		
-
-		
-	}
+//	@Override
+//	public void mouseExited(MouseEvent e) {		
+//		if(this.isActive()) {
+//			this.setBackground(defaultColor);
+//		}
+//		else {
+//			this.setBackground(Color.GRAY);
+//		}	
+//	}
 	
 	
 	public void setShips(int deck) {		
@@ -306,6 +293,7 @@ public class Field extends JTable implements MouseListener{
 						this.setValueAt("■", coordTemp.get(j)[0], coordTemp.get(j)[1]);						
 					}	
 					
+					
 					for (int j=0; j<zoneTemp.size(); j++) {					
 						zoneTotal.add(zoneTemp.get(j));							
 					}
@@ -319,19 +307,16 @@ public class Field extends JTable implements MouseListener{
 	}
 	
 	
-	public ArrayList<int[]> getShipsCoordinates(){
-		
+	public ArrayList<int[]> getShipsCoordinates(){		
 		return this.coordTotal;
 	}
 	
-	public void resetField() {
-		
+	public void resetField() {		
 		for (int o = 0; o<size; o++) {			
 			for (int u = 0; u<size; u++) { 				
 				this.setValueAt(" ", o, u);
 			}					
-		}	
-		
+		}			
 		for (int i = 0; i<size; i++) {
 			if (i==0) {
 				this.setValueAt("\\", i, i);
@@ -339,15 +324,12 @@ public class Field extends JTable implements MouseListener{
 			else {
 				this.setValueAt(Character.toString((char)(64+i)), 0, i);
 			}
-		}
-		
+		}		
 		for (int i = 1; i<size; i++) {
 			this.setValueAt(Integer.toString(i), i, 0);
-		}
-		
+		}		
 		coordTotal = new ArrayList<int[]>();
 		zoneTotal = new ArrayList<int[]>();
-		
 	}
 	
 	
@@ -360,38 +342,34 @@ public class Field extends JTable implements MouseListener{
 		return this.active;
 	}
 	
-	public void setActive(boolean active) {
-		
+	public void setActive(boolean active) {		
 		this.setEnabled(active);
 		this.setFocusable(active);
-		this.setRowSelectionAllowed(active);
-		
+		this.setRowSelectionAllowed(active);		
 		if(active==true) {
 			this.setBackground(defaultColor);
 		}
 		else {
 			this.setBackground(Color.GRAY);
-		}
-		
+		}		
 		this.active = active;
 	}
 	
 	
-	public void attack(Field field) {
-		
+	public boolean attacked() {		
 		int row = rand.nextInt(1, size);
-		int col = rand.nextInt(1, size);
-		
-		if(field.cellAttacked(col, col)) {
-			
-			
-			
-			
+		int col = rand.nextInt(1, size);		
+		if(this.cellAttacked(col, col)) {			
+			System.out.println("USER IS HIT");
+			return true;
 		}
-		
-		
-		
+		else {
+			System.out.println("PC MISSED");
+			return false;
+		}
 	}
+
+	
 	
 	
 	

@@ -6,7 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class CustomButton extends JButton implements ActionListener{
+public class CustomButton extends JButton {
 
 	public CustomButton(String name, int width, int height, CustomPanel container, boolean active) {
 		
@@ -16,50 +16,17 @@ public class CustomButton extends JButton implements ActionListener{
 		this.setEnabled(active);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		if (e.getSource() instanceof JButton) {
-			JButton pressed = (JButton) e.getSource();
-			
-			if (pressed.getText().equals("Start")) {
-				
-				Graphic.computerField.setShips(4);
-				Graphic.computerField.setShips(3);
-				Graphic.computerField.setShips(2);
-				Graphic.computerField.setShips(1);
-				
-				Graphic.userField.setShips(4);
-				Graphic.userField.setShips(3);
-				Graphic.userField.setShips(2);
-				Graphic.userField.setShips(1);
-				
-				Graphic.userField.setFocusable(false);
-				Graphic.userField.setRowSelectionAllowed(false);
-				
-				this.setEnabled(false);
-				Graphic.stopButton.setEnabled(true);
-				
-				System.out.println("START");
-			}
-			
-			else if (pressed.getText().equals("Stop")) {
-				
-				Graphic.computerField.resetField();
-				Graphic.userField.resetField();
-				
-				
-				this.setEnabled(false);
-				Graphic.startButton.setEnabled(true);
-				
-				System.out.println("STOP");
-			}
-			
-			else if (pressed.getText().equals("About")) {
-				
-			}
-		}
-	}
+//	@Override
+//	public void actionPerformed(ActionEvent e) {
+//		
+//		if (e.getSource() instanceof JButton) {
+//			JButton pressed = (JButton) e.getSource();
+//			
+//			if (pressed.getText().equals("About")) {
+//				
+//			}
+//		}
+//	}
 	
 	
 	
