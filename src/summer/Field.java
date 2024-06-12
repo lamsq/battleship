@@ -16,12 +16,9 @@ public class Field extends JTable {
 	private ArrayList<int[]> coordTotal = new ArrayList<int[]>();
 	private ArrayList<int[]> zoneTotal = new ArrayList<int[]>();
 	private int size;
-	private int selectRow;
-	private int selectCol;
-	private int confirmRow;
-	private int confirmCol;
+	private static ArrayList<int[]> pcAttacksTotal = new ArrayList<int[]>();
 	private boolean active;
-	private static int clickCounter=0;
+	
 	public Thread turn;
 	
 	public Field (DefaultTableModel model, int size, CustomPanel container, boolean active) {
@@ -69,43 +66,11 @@ public class Field extends JTable {
 		
 	}
 
-//	@Override
-//	public void mouseClicked(MouseEvent e) {
-//		
-//		
-//		
-//		System.out.println("test: mouse ckicked in the field");
-//		
-//		if (getSelectedRow()>0 && getSelectedColumn()>0) {
-//			if (clickCounter==1) {				
-//				confirmRow=getSelectedRow();
-//				confirmCol=getSelectedColumn();				
-//				if(confirmRow==selectRow && confirmCol==selectCol) {			
-//					clickCounter++;		
-//					System.out.println("counter increased");
-//				}				
-//				else {
-//					clickCounter--;
-//					System.out.println("counter decreased");
-//				}				
-//			}
-//			else if (clickCounter ==0) {
-//				selectRow = this.getSelectedRow();
-//				selectCol = this.getSelectedColumn();
-//				clickCounter++;				
-//			}
-//		}
-//		
-//		if (clickCounter == 2) {
-//			this.cellAttacked(confirmRow, confirmCol);
-//			clickCounter = 0;
-//			
-//		}
-//		
-//	}
+
 	
 	public boolean cellAttacked(int row, int col) {
 		
+		addPcAttacks(new int[] {row, col});	
 		
 		if (this.getModel().getValueAt(row, col)!=null && this.getModel().getValueAt(row, col).equals("X")) {
 			return false;
@@ -119,40 +84,11 @@ public class Field extends JTable {
 				return true;
 			}			
 		}
-		this.setValueAt("-", row, col);
+		this.setValueAt("o", row, col);
 		return false;
 	}
 	
 	
-
-//	@Override
-//	public void mousePressed(MouseEvent e) {
-//		
-//		
-//		
-//	}
-//
-//	@Override
-//	public void mouseReleased(MouseEvent e) {
-//		
-//		
-//		
-//	}
-
-//	@Override
-//	public void mouseEntered(MouseEvent e) {			
-//		this.setBackground(Color.PINK);			
-//	}
-
-//	@Override
-//	public void mouseExited(MouseEvent e) {		
-//		if(this.isActive()) {
-//			this.setBackground(defaultColor);
-//		}
-//		else {
-//			this.setBackground(Color.GRAY);
-//		}	
-//	}
 	
 	
 	public void setShips(int deck) {		
@@ -356,28 +292,133 @@ public class Field extends JTable {
 	}
 	
 	
-	public boolean attacked() {		
-		int row = rand.nextInt(1, size);
-		int col = rand.nextInt(1, size);		
-		if(this.cellAttacked(col, col)) {			
-			System.out.println("USER IS HIT");
-			return true;
+	public boolean attacked(int row, int col, boolean direction) {
+		
+		if(direction) {
+			
+			int directionInt = rand.nextInt(1, 3); //1 - vert, 2 - hor
+			
+			if (directionInt==1) {
+			
+								
+				if(row==1) {						
+					if(this.cellAttacked(row+1, col)) {			
+						System.out.println("USER IS HIT");
+						return true;
+					}
+					else {
+						System.out.println("PC MISSED");
+						return false;
+					}						
+				}
+				else if (row==size) {						
+					if(this.cellAttacked(row-1, col)) {			
+						System.out.println("USER IS HIT");
+						return true;
+					}
+					else {
+						System.out.println("PC MISSED");
+						return false;
+					}						
+				}
+				else {						
+					int upDown = rand.nextInt(1, 3); //1-up, 2-down						
+					if (upDown==1) {						
+													
+							if(this.cellAttacked(row-1, col)) {			
+								System.out.println("USER IS HIT");
+								return true;
+							}
+							else {
+								System.out.println("PC MISSED");
+								return false;
+							}
+					}
+					else {								
+							if(this.cellAttacked(row+1, col)) {			
+								System.out.println("USER IS HIT");
+								return true;
+							}
+							else {
+								System.out.println("PC MISSED");
+								return false;
+							}							
+					}
+				}
+		}					
+			else {					
+				if(col==1) {						
+					if(this.cellAttacked(row, col+1)) {			
+						System.out.println("USER IS HIT");
+						return true;
+					}
+					else {
+						System.out.println("PC MISSED");
+						return false;
+					}						
+				}
+				else if (col==size) {						
+					if(this.cellAttacked(row, col-1)) {			
+						System.out.println("USER IS HIT");
+						return true;
+					}
+					else {
+						System.out.println("PC MISSED");
+						return false;
+					}						
+				}
+				else {						
+					int leftRight = rand.nextInt(1, 3); //1-left, 2-right						
+					if (leftRight==1) {															
+							if(this.cellAttacked(row, col-1)) {			
+								System.out.println("USER IS HIT");
+								return true;
+							}
+							else {
+								System.out.println("PC MISSED");
+								return false;
+							}								
+					}
+					else {
+							if(this.cellAttacked(row, col+1)) {			
+								System.out.println("USER IS HIT");
+								return true;
+							}
+							else {
+								System.out.println("PC MISSED");
+								return false;
+							}							
+					}
+				}
+			}
 		}
-		else {
-			System.out.println("PC MISSED");
-			return false;
-		}
+		
+		else {			
+			if(this.cellAttacked(row, col)) {			
+				System.out.println("USER IS HIT");
+				return true;
+			}
+			else {
+				System.out.println("PC MISSED");
+				return false;
+			}			
+		}					
+	}
+	
+	
+	
+	
+	public static ArrayList<int[]> getPcAttacks(){
+		
+		return pcAttacksTotal;
+	}
+	
+	public static void addPcAttacks(int[] attack) {
+		
+		pcAttacksTotal.add(attack);
+	}
+	
+		
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-}
+

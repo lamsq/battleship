@@ -1,6 +1,7 @@
 package summer;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.lang.System.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -23,6 +24,8 @@ public class Graphic {
 	private static int selectCol;
 	private static int confirmRow;
 	private static int confirmCol;
+	static Random rand = new Random();
+	static int size;
 	
 	public static void main (String[] args) {
 		
@@ -40,9 +43,8 @@ public class Graphic {
 		CustomLabel compFieldLabel = new CustomLabel(compFieldLabelPanel, "CPU:");
 		
 		
-		int size = 10;
+		size = 10;
 		size = size+1;
-		int move = 0;
 		
 		
 		CustomPanel compFieldPanel = new CustomPanel(mainPanel);
@@ -160,16 +162,36 @@ public class Graphic {
 					else {
 						//userTurn = false;
 						
-						while (userField.attacked()) {
-							System.out.println("USER ATTACKED");
+						int row = rand.nextInt(1, size);
+						int col = rand.nextInt(1, size);
+						
+						if (userField.attacked(row, col, false)) {
 							
-							continue;
-						}
-						
-						userTurn = true;
-						
-					}
-					
+							
+							
+							System.out.println("USER ATTACKED");					
+							
+							while (true) {							
+								try {									
+									if (userField.attacked(row, col, true)) {
+										System.out.println("REPEATED ATTACK SUCCEED");
+										
+										TimeUnit.SECONDS.sleep(3);
+										continue;
+									}
+									else {
+										System.out.println("REAPEATED ATTACK FAILED");
+										break;
+									}
+									
+								}
+								catch (Exception E) {									
+									continue;									
+								}								
+							}
+						}						
+						userTurn = true;						
+					}					
 					clickCounter = 0;						
 				}					
 			}
@@ -205,68 +227,12 @@ public class Graphic {
 		});
 		
 		
-//		while (computerField.getShipsCoordinates().size()!=0 || userField.getShipsCoordinates().size()!=0 ) {
-//			
-//			
-//			
-//			
-//			
-//			
-//			
-//			System.out.println("LOOP");
-//			if (move%2==0) {
-//				
-//				
-//				
-//				System.out.println("PC IS ATTACKED");
-//				
-//				userField.setActive(false);
-//				
-//				
-//				computerField.setActive(true);
-//				
-//			}
-//			else {
-//				System.out.println("USER IS ATTACKED");
-//				userField.setActive(true);
-//				
-//				computerField.setActive(false);
-//				userField.attacked();
-//				
-//			}
-//			System.out.println(move);
-//			move++;
-//		}
+
 		
 		
 		
 	}
 	
 	
-	
-	
-	
-        
-	
-	
-	
-	
-	
-	
-	
-	/**
-	public class CellRender extends DefaultTableCellRenderer  {
-		
-	    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) { 
-	    	
-	    	Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); 
-
-	    	cell.setBackground(Color.red); 
-
-	    	return cell;
-	    	
-	    } 
-	}
-	**/
 	
 }
