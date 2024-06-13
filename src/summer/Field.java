@@ -19,7 +19,6 @@ public class Field extends JTable {
 	private static ArrayList<int[]> pcAttacksTotal = new ArrayList<int[]>();
 	private boolean active;
 	
-	public Thread turn;
 	
 	public Field (DefaultTableModel model, int size, CustomPanel container, boolean active) {
 		
@@ -72,6 +71,8 @@ public class Field extends JTable {
 		
 		addPcAttacks(new int[] {row, col});	
 		
+		System.out.println(row+" "+ col);
+		
 		if (this.getModel().getValueAt(row, col)!=null && this.getModel().getValueAt(row, col).equals("X")) {
 			return false;
 		}
@@ -81,6 +82,7 @@ public class Field extends JTable {
 			if (this.coordTotal.get(i)[0]==row && this.coordTotal.get(i)[1]==col ) {
 				this.setValueAt("X", row, col);
 				this.coordTotal.remove(i);
+				
 				return true;
 			}			
 		}

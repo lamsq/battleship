@@ -162,8 +162,32 @@ public class Graphic {
 					else {
 						//userTurn = false;
 						
-						int row = rand.nextInt(1, size);
-						int col = rand.nextInt(1, size);
+						
+						boolean coordinates = false;
+						int row = 0;
+						int col = 0;
+						
+						while(!coordinates) {
+							
+							row = rand.nextInt(1, size);
+							col = rand.nextInt(1, size);
+							
+							
+							for (int i=0; i<Field.getPcAttacks().size();i++) {
+								if(Field.getPcAttacks().get(i)[0]==row && Field.getPcAttacks().get(i)[1]==col) {
+									break;
+								}
+								if(i==Field.getPcAttacks().size()-1) {
+									coordinates = true;
+								}
+								
+							}
+							
+						}
+						
+						
+						
+						
 						
 						if (userField.attacked(row, col, false)) {
 							
@@ -176,7 +200,6 @@ public class Graphic {
 									if (userField.attacked(row, col, true)) {
 										System.out.println("REPEATED ATTACK SUCCEED");
 										
-										TimeUnit.SECONDS.sleep(3);
 										continue;
 									}
 									else {
