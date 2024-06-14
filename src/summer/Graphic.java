@@ -185,13 +185,7 @@ public class Graphic {
 							
 						}
 						
-						
-						
-						
-						
 						if (userField.attacked(row, col, false)) {
-							
-							
 							
 							System.out.println("USER ATTACKED");					
 							

@@ -298,112 +298,77 @@ public class Field extends JTable {
 		
 		if(direction) {
 			
-			int directionInt = rand.nextInt(1, 3); //1 - vert, 2 - hor
+			boolean directed = false;
+			boolean hit = false;
+			int directedCounter = 6;
 			
-			if (directionInt==1) {
-			
-								
-				if(row==1) {						
-					if(this.cellAttacked(row+1, col)) {			
-						System.out.println("USER IS HIT");
-						return true;
+			while (!directed) {
+				
+				
+				directedCounter--;
+				
+				
+				
+				
+				
+				
+				int directionInt = rand.nextInt(1, 3); //1 - vert, 2 - hor
+				
+				if (directionInt==1) {									
+					if(row==1) {						
+						if(this.cellAttacked(row+1, col)) 								
+							hit = true;																	
 					}
-					else {
-						System.out.println("PC MISSED");
-						return false;
-					}						
-				}
-				else if (row==size) {						
-					if(this.cellAttacked(row-1, col)) {			
-						System.out.println("USER IS HIT");
-						return true;
+					else if (row==size) {						
+						if(this.cellAttacked(row-1, col)) 							
+							hit = true;																		
 					}
-					else {
-						System.out.println("PC MISSED");
-						return false;
-					}						
-				}
-				else {						
-					int upDown = rand.nextInt(1, 3); //1-up, 2-down						
-					if (upDown==1) {						
-													
-							if(this.cellAttacked(row-1, col)) {			
-								System.out.println("USER IS HIT");
-								return true;
-							}
-							else {
-								System.out.println("PC MISSED");
-								return false;
-							}
+					else {						
+						int upDown = rand.nextInt(1, 3); //1-up, 2-down						
+						if (upDown==1) {																
+								if(this.cellAttacked(row-1, col)) 									
+									hit = true;																
+						}
+						else {								
+								if(this.cellAttacked(row+1, col))									
+									hit = true;																						
+						}
 					}
-					else {								
-							if(this.cellAttacked(row+1, col)) {			
-								System.out.println("USER IS HIT");
-								return true;
-							}
-							else {
-								System.out.println("PC MISSED");
-								return false;
-							}							
+				}					
+				else {					
+					if(col==1) {						
+						if(this.cellAttacked(row, col+1)) 								
+							hit = true;															
 					}
-				}
-		}					
-			else {					
-				if(col==1) {						
-					if(this.cellAttacked(row, col+1)) {			
-						System.out.println("USER IS HIT");
-						return true;
+					else if (col==size) {						
+						if(this.cellAttacked(row, col-1)) 						
+							hit = true;																
 					}
-					else {
-						System.out.println("PC MISSED");
-						return false;
-					}						
-				}
-				else if (col==size) {						
-					if(this.cellAttacked(row, col-1)) {			
-						System.out.println("USER IS HIT");
-						return true;
-					}
-					else {
-						System.out.println("PC MISSED");
-						return false;
-					}						
-				}
-				else {						
-					int leftRight = rand.nextInt(1, 3); //1-left, 2-right						
-					if (leftRight==1) {															
-							if(this.cellAttacked(row, col-1)) {			
-								System.out.println("USER IS HIT");
-								return true;
-							}
-							else {
-								System.out.println("PC MISSED");
-								return false;
-							}								
-					}
-					else {
-							if(this.cellAttacked(row, col+1)) {			
-								System.out.println("USER IS HIT");
-								return true;
-							}
-							else {
-								System.out.println("PC MISSED");
-								return false;
-							}							
+					else {						
+						int leftRight = rand.nextInt(1, 3); //1-left, 2-right						
+						if (leftRight==1) {															
+								if(this.cellAttacked(row, col-1)) 									
+									hit = true;																								
+						}
+						else {
+								if(this.cellAttacked(row, col+1)) 								
+									hit = true;																					
+						}
 					}
 				}
+				
 			}
+			return false; //???
+			
+			
 		}
 		
 		else {			
-			if(this.cellAttacked(row, col)) {			
-				System.out.println("USER IS HIT");
-				return true;
-			}
-			else {
-				System.out.println("PC MISSED");
+			if(this.cellAttacked(row, col)) 			
+				return true;			
+			else 				
 				return false;
-			}			
+					
 		}					
 	}
 	
@@ -418,6 +383,17 @@ public class Field extends JTable {
 	public static void addPcAttacks(int[] attack) {
 		
 		pcAttacksTotal.add(attack);
+	}
+	
+	
+	public static boolean wasAttackedPc(int[] attack) {
+			
+			for (int i=0; i<Field.getPcAttacks().size();i++) {
+				if(Field.getPcAttacks().get(i)[0]==attack[0] && Field.getPcAttacks().get(i)[1]==attack[1]) {
+					return false;					
+				}
+			}
+			return true;
 	}
 	
 		
