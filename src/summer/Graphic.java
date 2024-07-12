@@ -167,20 +167,14 @@ public class Graphic {
 						int row = 0;
 						int col = 0;
 						
-						while(!coordinates) {
+						while(!coordinates) { //generates unused coordinates for attack
 							
 							row = rand.nextInt(1, size);
 							col = rand.nextInt(1, size);
 							
 							
-							for (int i=0; i<Field.getPcAttacks().size();i++) {
-								if(Field.getPcAttacks().get(i)[0]==row && Field.getPcAttacks().get(i)[1]==col) {
-									break;
-								}
-								if(i==Field.getPcAttacks().size()-1) {
-									coordinates = true;
-								}
-								
+							if (!Field.wasAttackedPc(new int[] {row, col})) {
+								coordinates = true;
 							}
 							
 						}
