@@ -374,9 +374,11 @@ public class Field extends JTable {
 				
 			}
 			
-			
+			if (hit) {
+				return true;
+			}
 
-			return false; //???
+			return false; 
 			
 			
 		}

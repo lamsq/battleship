@@ -160,8 +160,6 @@ public class Graphic {
 						userTurn = true;
 					}
 					else {
-						//userTurn = false;
-						
 						
 						boolean coordinates = false;
 						int row = 0;
@@ -172,11 +170,9 @@ public class Graphic {
 							row = rand.nextInt(1, size);
 							col = rand.nextInt(1, size);
 							
-							
 							if (!Field.wasAttackedPc(new int[] {row, col})) {
 								coordinates = true;
 							}
-							
 						}
 						
 						if (userField.attacked(row, col, false)) {
@@ -187,21 +183,21 @@ public class Graphic {
 								try {									
 									if (userField.attacked(row, col, true)) {
 										System.out.println("REPEATED ATTACK SUCCEED");
-										
 										continue;
 									}
 									else {
 										System.out.println("REAPEATED ATTACK FAILED");
 										break;
 									}
-									
 								}
 								catch (Exception E) {									
 									continue;									
 								}								
 							}
-						}						
-						userTurn = true;						
+						}
+						else 
+							userTurn = true;
+												
 					}					
 					clickCounter = 0;						
 				}					
