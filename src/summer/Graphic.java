@@ -26,6 +26,7 @@ public class Graphic {
 	private static int confirmCol;
 	static Random rand = new Random();
 	static int size;
+	static boolean finished = false;
 	
 	public static void main (String[] args) {
 		
@@ -136,7 +137,7 @@ public class Graphic {
 				
 				System.out.println("test: mouse ckicked in the field");				
 				
-				if (userTurn && computerField.getSelectedRow()>0 && computerField.getSelectedColumn()>0) {
+				if (userTurn && !finished) { //computerField.getSelectedRow()>0 && computerField.getSelectedColumn()>0
 					if (clickCounter==1) {				
 						confirmRow=computerField.getSelectedRow();
 						confirmCol=computerField.getSelectedColumn();				
@@ -158,6 +159,10 @@ public class Graphic {
 				if (clickCounter == 2) {					
 					if(computerField.cellAttacked(confirmRow, confirmCol)) {
 						userTurn = true;
+						
+						if(computerField.getShipsCoord().size()==0) {  //end of the game       userField.getShipsCoord().size()==0 ||
+							System.out.println("GAME OVER /nYOU WON");
+						}
 					}
 					else {
 						
@@ -165,11 +170,9 @@ public class Graphic {
 						int row = 0;
 						int col = 0;
 						
-						while(!coordinates) { //generates unused coordinates for attack
-							
+						while(!coordinates) { //generates unused coordinates for attack							
 							row = rand.nextInt(1, size);
-							col = rand.nextInt(1, size);
-							
+							col = rand.nextInt(1, size);							
 							if (!Field.wasAttackedPc(new int[] {row, col})) {
 								coordinates = true;
 							}
@@ -177,30 +180,49 @@ public class Graphic {
 						
 						if (userField.attacked(row, col, false)) {
 							
-							System.out.println("USER ATTACKED");					
+							if(userField.getShipsCoord().size()==0) {  //end of the game   
+								System.out.println("GAME OVER /nPC WON");
+							}							
+							System.out.println("USER ATTACKED");	
 							
-							while (true) {							
-								try {									
-									if (userField.attacked(row, col, true)) {
-										System.out.println("REPEATED ATTACK SUCCEED");
-										continue;
-									}
-									else {
-										System.out.println("REAPEATED ATTACK FAILED");
-										break;
-									}
+							
+							while(userField.attacked(row, col, true)) {
+								if(userField.getShipsCoord().size()==0) {  //end of the game   
+									System.out.println("GAME OVER /nPC WON");
 								}
-								catch (Exception E) {									
-									continue;									
-								}								
-							}
+								System.out.println("REPEATED ATTACK SUCCEED");
+								continue;
+							}	
+								
+							
+							
+							
+//							while (true) {							
+//								try {									
+//									if (userField.attacked(row, col, true)) {
+//										System.out.println("REPEATED ATTACK SUCCEED");
+//										continue;
+//									}
+//									else {
+//										System.out.println("REAPEATED ATTACK FAILED");
+//										break;
+//									}
+//								}
+//								catch (Exception E) {									
+//									continue;									
+//								}								
+//							}
 						}
 						else 
 							userTurn = true;
 												
 					}					
 					clickCounter = 0;						
-				}					
+				}
+				if(finished) {
+					
+					System.out.println("GAME OVER");
+				}
 			}
 
 			@Override

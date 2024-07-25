@@ -416,7 +416,15 @@ public class Field extends JTable {
 			return false;
 	}
 	
+	public ArrayList<?> getShipsCoord(){
 		
+		return this.coordTotal;
+		
+		
+	}
+	
+	
+	
 	}
 
 
