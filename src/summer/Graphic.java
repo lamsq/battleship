@@ -156,11 +156,12 @@ public class Graphic {
 						clickCounter++;				
 					}
 				}					
-				if (clickCounter == 2) {					
+				if (clickCounter == 2 && !finished) {					
 					if(computerField.cellAttacked(confirmRow, confirmCol)) {
 						userTurn = true;
 						
 						if(computerField.getShipsCoord().size()==0) {  //end of the game       userField.getShipsCoord().size()==0 ||
+							finished = true;
 							System.out.println("GAME OVER /nYOU WON");
 						}
 					}
@@ -178,49 +179,20 @@ public class Graphic {
 							}
 						}
 						
-						if (userField.attacked(row, col, false)) {
-							
+						while(userField.attacked(row, col)) {							
 							if(userField.getShipsCoord().size()==0) {  //end of the game   
+								finished = true;
 								System.out.println("GAME OVER /nPC WON");
 							}							
-							System.out.println("USER ATTACKED");	
-							
-							
-							while(userField.attacked(row, col, true)) {
-								if(userField.getShipsCoord().size()==0) {  //end of the game   
-									System.out.println("GAME OVER /nPC WON");
-								}
-								System.out.println("REPEATED ATTACK SUCCEED");
-								continue;
-							}	
-								
-							
-							
-							
-//							while (true) {							
-//								try {									
-//									if (userField.attacked(row, col, true)) {
-//										System.out.println("REPEATED ATTACK SUCCEED");
-//										continue;
-//									}
-//									else {
-//										System.out.println("REAPEATED ATTACK FAILED");
-//										break;
-//									}
-//								}
-//								catch (Exception E) {									
-//									continue;									
-//								}								
-//							}
+							System.out.println("USER ATTACKED");							
 						}
-						else 
-							userTurn = true;
+						
+						userTurn = true;
 												
 					}					
 					clickCounter = 0;						
 				}
-				if(finished) {
-					
+				if(finished) {					
 					System.out.println("GAME OVER");
 				}
 			}

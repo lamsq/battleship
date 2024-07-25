@@ -294,102 +294,14 @@ public class Field extends JTable {
 	}
 	
 	
-	public boolean attacked(int row, int col, boolean direction) {
+	public boolean attacked(int row, int col) {
 		
-		if(direction) {
-			
-			boolean directed = false;
-			boolean hit = false;
-			int directedCounter = 6;
-			
-			while (!directed && directedCounter!=0) {
-				
-				
-				directedCounter--;
-				
-				
-				int directionInt = rand.nextInt(1, 3); //1 - vert, 2 - hor
-				
-				if (directionInt==1) {									
-					if(row==1) {						
-						if(this.cellAttacked(row+1, col)) 								
-							hit = true;	
-						else
-							break;
-					}
-					else if (row==size) {						
-						if(this.cellAttacked(row-1, col)) 							
-							hit = true;	
-						else
-							break;
-						
-					}
-					else {						
-						int upDown = rand.nextInt(1, 3); //1-up, 2-down						
-						if (upDown==1) {																
-								if(this.cellAttacked(row-1, col)) 									
-									hit = true;	
-								else
-									break;
-						}
-						else {								
-								if(this.cellAttacked(row+1, col))									
-									hit = true;		
-								else
-									break;
-						}
-					}
-				}					
-				else {					
-					if(col==1) {						
-						if(this.cellAttacked(row, col+1)) 								
-							hit = true;	
-						else
-							break;
-					}
-					else if (col==size) {						
-						if(this.cellAttacked(row, col-1)) 						
-							hit = true;	
-						else
-							break;
-					}
-					else {						
-						int leftRight = rand.nextInt(1, 3); //1-left, 2-right						
-						if (leftRight==1) {															
-								if(this.cellAttacked(row, col-1)) 									
-									hit = true;	
-								else
-									break;
-						}
-						else {
-								if(this.cellAttacked(row, col+1)) 								
-									hit = true;
-								else
-									break;
-						}
-					}
-				}
-				
-				
-				
-			}
-			
-			if (hit) {
-				return true;
-			}
-
-			return false; 
-			
-			
-		}
-		
-		else {			
-			if(this.cellAttacked(row, col)) 			
-				return true;			
-			else 				
-				return false;
+		if(this.cellAttacked(row, col)) 			
+			return true;			
 					
-		}					
+		return false;
+			
+							
 	}
 	
 	
