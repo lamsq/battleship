@@ -162,27 +162,22 @@ public class Graphic {
 						
 						if(computerField.getShipsCoord().size()==0) {  //end of the game       userField.getShipsCoord().size()==0 ||
 							finished = true;
-							System.out.println("GAME OVER /nYOU WON");
+							System.out.println("GAME OVER \nYOU WON");
 						}
 					}
 					else {
 						
-						boolean coordinates = false;
-						int row = 0;
-						int col = 0;
 						
-						while(!coordinates) { //generates unused coordinates for attack							
-							row = rand.nextInt(1, size);
-							col = rand.nextInt(1, size);							
-							if (!Field.wasAttackedPc(new int[] {row, col})) {
-								coordinates = true;
-							}
-						}
 						
-						while(userField.attacked(row, col)) {							
+						int[] atcCoord = userField.getAttackCoordinates();
+						
+						while(userField.attacked(atcCoord)) {
+							
+							atcCoord = userField.getAttackCoordinates();
+							
 							if(userField.getShipsCoord().size()==0) {  //end of the game   
 								finished = true;
-								System.out.println("GAME OVER /nPC WON");
+								System.out.println("GAME OVER \nPC WON");
 							}							
 							System.out.println("USER ATTACKED");							
 						}

@@ -294,9 +294,9 @@ public class Field extends JTable {
 	}
 	
 	
-	public boolean attacked(int row, int col) {
+	public boolean attacked(int[] coord) {
 		
-		if(this.cellAttacked(row, col)) 			
+		if(this.cellAttacked(coord[0], coord[1])) 			
 			return true;			
 					
 		return false;
@@ -328,9 +328,25 @@ public class Field extends JTable {
 			return false;
 	}
 	
-	public ArrayList<?> getShipsCoord(){
+	public ArrayList<?> getShipsCoord(){		
+		return this.coordTotal;		
 		
-		return this.coordTotal;
+	}
+	
+	public int[] getAttackCoordinates() {
+		
+		int[] coord = {0, 0};
+		
+		
+		while(true) { //generates unused coordinates for attack							
+			coord[0] = rand.nextInt(1, size);
+			coord[1] = rand.nextInt(1, size);							
+			if (!Field.wasAttackedPc(coord)) {
+				break;
+			}
+		}
+		
+		return coord;
 		
 		
 	}
