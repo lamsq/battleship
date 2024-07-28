@@ -3,6 +3,8 @@ package summer;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.lang.System.*;
+import java.time.Year;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.*;
@@ -30,7 +32,6 @@ public class Graphic {
 	
 	public static void main (String[] args) {
 		
-		
 		CustomFrame mFrame = new CustomFrame("Battleship");
 		
 		CustomPanel mainPanel = new CustomPanel(mFrame, 20, 20, 20, 20);
@@ -43,111 +44,86 @@ public class Graphic {
 		CustomPanel compFieldLabelPanel = new CustomPanel(mainPanel);
 		CustomLabel compFieldLabel = new CustomLabel(compFieldLabelPanel, "CPU:");
 		
-		
 		size = 10;
 		size = size+1;
 		
-		
 		CustomPanel compFieldPanel = new CustomPanel(mainPanel);
 		DefaultTableModel modelComp = new DefaultTableModel(size, size);
-		computerField = new Field(modelComp, size, compFieldPanel, true);
+		computerField = new Field(modelComp, size, compFieldPanel, true, false);
 		CustomPanel userFieldLabelPanel = new CustomPanel(mainPanel);
-		
 		
 		CustomLabel userFieldLabel = new CustomLabel(userFieldLabelPanel, "Player:");		
 		CustomPanel userFieldPanel = new CustomPanel(mainPanel);
 		DefaultTableModel modelUser = new DefaultTableModel(size, size);
-		userField = new Field(modelUser, size, userFieldPanel, true);
-		
-		
-		//action listeners for buttons
-		//startButton.addActionListener(startButton);
+		userField = new Field(modelUser, size, userFieldPanel, true, true);
 		
 		startButton.addActionListener(new ActionListener() {
-
-			   public void actionPerformed(ActionEvent e) {
-			    
-				    Graphic.userField.setActive(false);
-					
-					Graphic.userField.setShips(4);
-					Graphic.userField.setShips(3);
-					Graphic.userField.setShips(2);
-					Graphic.userField.setShips(1);
-					
-					Graphic.computerField.setActive(true);
-					
-					Graphic.computerField.setShips(4);
-					Graphic.computerField.setShips(3);
-					Graphic.computerField.setShips(2);
-					Graphic.computerField.setShips(1);
-					
+			   public void actionPerformed(ActionEvent e) {			    
+				    Graphic.userField.setActive(false);					
+				    for (int i=1; i<5; i++) {
+				    	Graphic.userField.setShips(i);
+				    }					
+					Graphic.computerField.setActive(true);					
+					for (int i=1; i<5; i++) {
+				    	Graphic.computerField.setShips(i);
+				    }					
 					Graphic.userField.setFocusable(false);
-					Graphic.userField.setRowSelectionAllowed(false);
-					
+					Graphic.userField.setRowSelectionAllowed(false);					
 					startButton.setEnabled(false);
 					Graphic.stopButton.setEnabled(true);
-					
-					
-					
-					System.out.println("START");
-				   
 			   }
 		});
 		
-		
-		stopButton.addActionListener(new ActionListener() {
-			
+		stopButton.addActionListener(new ActionListener() {			
 			 public void actionPerformed(ActionEvent e) {
-
 					Graphic.computerField.resetField();
-					Graphic.userField.resetField();
-					
+					Graphic.userField.resetField();					
 					stopButton.setEnabled(false);
-					Graphic.startButton.setEnabled(true);
-				
-					System.out.println("STOP");
+					Graphic.startButton.setEnabled(true);					
 			 }
 		});
 		
-		//aboutButton.addActionListener(aboutButton);
-		
-		
-		
-		//computerField.addMouseListener(computerField);
-		//userField.addMouseListener(userField);
+		aboutButton.addActionListener(new ActionListener() {	
+			 public void actionPerformed(ActionEvent e) {				 
+				 CustomFrame aboutFrame = new CustomFrame("About");		
+				 aboutFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);		
+				 CustomPanel mainAboutPanel = new CustomPanel(aboutFrame, 20, 20, 20, 20);
+				 CustomPanel labelAboutPanel = new CustomPanel(mainAboutPanel);
+				 CustomPanel buttonAboutPanel = new CustomPanel(mainAboutPanel);
+				 CustomLabel aboutLabel = new CustomLabel(labelAboutPanel, "<html><center><font size=\"+1\">Project page:"
+				 		+ "<br>github.com/lamsq/battleship</font></center>"
+				 		+ "<br><br><center>2024-"+Year.now().getValue()+" ©</center></html>");
+				 CustomButton okButton = new CustomButton("Ok", 80, 50, buttonAboutPanel, true); 	
+				 okButton.addActionListener(new ActionListener() {
+					 public void actionPerformed(ActionEvent e)	{
+						 aboutFrame.dispose();
+						 }
+					});					
+				 aboutFrame.pack();
+				 aboutFrame.setLocationRelativeTo(null);
+				 aboutFrame.setVisible(true);
+			 }
+		});
 		
 		userField.setActive(false);
-		
 		computerField.setActive(false);
 		
-		
-		
-		
 		mFrame.pack();
+		mFrame.setLocationRelativeTo(null);
 		mFrame.setVisible(true);
-		
-		
-		
-		
-		
 		
 		computerField.addMouseListener(new MouseListener() {
 			@Override
-			public void mouseClicked(MouseEvent e) {	
-				
-				System.out.println("test: mouse ckicked in the field");				
-				
-				if (userTurn && !finished) { //computerField.getSelectedRow()>0 && computerField.getSelectedColumn()>0
+			public void mouseClicked(MouseEvent e) {				
+				if (userTurn && !finished) { 
 					if (clickCounter==1) {				
 						confirmRow=computerField.getSelectedRow();
 						confirmCol=computerField.getSelectedColumn();				
 						if(confirmRow==selectRow && confirmCol==selectCol) {			
 							clickCounter++;		
-							System.out.println("counter increased");
 						}				
 						else {
 							clickCounter=0;
-							System.out.println("counter decreased");
 						}				
 					}
 					else if (clickCounter ==0) {
@@ -158,37 +134,26 @@ public class Graphic {
 				}					
 				if (clickCounter == 2 && !finished) {					
 					if(computerField.cellAttacked(confirmRow, confirmCol)) {
-						userTurn = true;
-						
-						if(computerField.getShipsCoord().size()==0) {  //end of the game       userField.getShipsCoord().size()==0 ||
+						userTurn = true;						
+						if(computerField.getShipsCoord().size()==0)   //end of the game    
 							finished = true;
-							System.out.println("GAME OVER \nYOU WON");
-						}
 					}
-					else {
-						
-						
-						
-						int[] atcCoord = userField.getAttackCoordinates();
-						
-						while(userField.attacked(atcCoord)) {
-							
-							atcCoord = userField.getAttackCoordinates();
-							
-							if(userField.getShipsCoord().size()==0) {  //end of the game   
-								finished = true;
-								System.out.println("GAME OVER \nPC WON");
-							}							
-							System.out.println("USER ATTACKED");							
-						}
-						
-						userTurn = true;
-												
+					else {						
+						int[] atcCoord = userField.getAttackCoordinates();						
+						while(userField.attacked(atcCoord)) {							
+							atcCoord = userField.getAttackCoordinates();							
+							if(userField.getShipsCoord().size()==0)   //end of the game   
+								finished = true;																			
+						}						
+						userTurn = true;												
 					}					
 					clickCounter = 0;						
 				}
 				if(finished) {					
-					System.out.println("GAME OVER");
+					if(userField.getShipsCoord().size()==0)
+						computerField.gameOver();						
+					else
+						userField.gameOver();					
 				}
 			}
 
@@ -205,27 +170,18 @@ public class Graphic {
 			}
 
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				
+			public void mouseEntered(MouseEvent e) {				
 				computerField.setBackground(Color.PINK);
 			}
 
 			@Override
-			public void mouseExited(MouseEvent e) {
-				
-				if(computerField.isActive()) {
-					computerField.setBackground(Color.cyan);
-				}
-				else {
-					computerField.setBackground(Color.GRAY);
-				}
+			public void mouseExited(MouseEvent e) {				
+				if(computerField.isActive()) 
+					computerField.setBackground(Color.cyan);				
+				else 
+					computerField.setBackground(Color.GRAY);				
 			}		
 		});
-		
-		
-
-		
-		
 		
 	}
 	

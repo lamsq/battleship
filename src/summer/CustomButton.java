@@ -8,30 +8,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 public class CustomButton extends JButton {
 
-	public CustomButton(String name, int width, int height, CustomPanel container, boolean active) {
-		
+	public CustomButton(String name, int width, int height, CustomPanel container, boolean active) { //button constructor	
+		//sets parameters
 		this.setText(name);
 		this.setSize(width, height);
 		container.add(this);
 		this.setEnabled(active);
 	}
-
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		
-//		if (e.getSource() instanceof JButton) {
-//			JButton pressed = (JButton) e.getSource();
-//			
-//			if (pressed.getText().equals("About")) {
-//				
-//			}
-//		}
-//	}
-	
-	
-	
-	
-	
-	
 	
 }

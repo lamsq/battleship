@@ -12,23 +12,16 @@ public class Ship {
 	private String direction;
 	private String position;
 	
-	public Ship(int deck, ArrayList<int[]> coord, ArrayList<int[]> zone, int direction, int size) {
-		
+	public Ship(int deck, ArrayList<int[]> coord, ArrayList<int[]> zone, int direction, int size) {		
 		this.deck = deck;
 		this.coord = coord;		
-		this.zone = zone;
-		
+		this.zone = zone;		
 		if(direction ==1)
 			this.direction = "vert";
 		else 
-			this.direction = "hor";
-		
+			this.direction = "hor";		
 		head = coord.get(0);
-		tail = coord.get(coord.size()-1);
-		
-		
-		
-		
+		tail = coord.get(coord.size()-1);		
 	}
 	
 	
